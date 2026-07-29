@@ -1,6 +1,6 @@
 {
   "name": "@arcade-cabinet/maze-core",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Engine-agnostic maze generation for arcade-cabinet fleet games: seeded grid mazes, rail-node geometry, multi-layer topology with provable cross-layer solvability, and curved-wall outlines. Extracted from Beppo-Laughs.",
   "type": "module",
   "license": "UNLICENSED",

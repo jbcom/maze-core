@@ -1,5 +1,5 @@
 import seedrandom from 'seedrandom';
-import { generateMaze, type MazeLayout } from './core';
+import { generateMaze, type MazeLayout } from './core.js';
 
 /**
  * How a connector is traversed between two adjacent layers.

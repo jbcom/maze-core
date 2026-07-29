@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { generateMaze } from './core';
-import { buildGeometry, DEFAULT_CONFIG } from './geometry';
+import { generateMaze } from './core.js';
+import { buildGeometry, DEFAULT_CONFIG } from './geometry.js';
 
 describe('ISSUE: Coordinate System Centering', () => {
   it('center cell should be at world origin (0, 0)', () => {

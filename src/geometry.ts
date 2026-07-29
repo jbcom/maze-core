@@ -1,4 +1,4 @@
-import type { MazeLayout } from './core';
+import type { MazeLayout } from './core.js';
 
 export interface MazeConfig {
   cellSize: number;

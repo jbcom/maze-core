@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { generateMaze } from './core';
-import { buildGeometry, DEFAULT_CONFIG, gridToWorld, worldToGrid } from './geometry';
+import { generateMaze } from './core.js';
+import { buildGeometry, DEFAULT_CONFIG, gridToWorld, worldToGrid } from './geometry.js';
 
 describe('buildGeometry', () => {
   it('creates rail nodes for all cells', () => {

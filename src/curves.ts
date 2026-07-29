@@ -1,6 +1,6 @@
 import seedrandom from 'seedrandom';
-import type { MazeLayout } from './core';
-import { DEFAULT_CONFIG, gridToWorld, type MazeConfig } from './geometry';
+import type { MazeLayout } from './core.js';
+import { DEFAULT_CONFIG, gridToWorld, type MazeConfig } from './geometry.js';
 
 export interface Point2 {
   x: number;

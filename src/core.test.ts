@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { generateMaze, type MazeCell } from './core';
+import { generateMaze, type MazeCell } from './core.js';
 
 describe('generateMaze', () => {
   it('generates maze with correct dimensions', () => {

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { generateMaze, type MazeLayout } from './core';
+import { generateMaze, type MazeLayout } from './core.js';
 import {
   buildCurvedWalls,
   type CurvedWall,
@@ -7,8 +7,8 @@ import {
   maxDeviation,
   minDistanceToWalls,
   type Point2,
-} from './curves';
-import { buildGeometry, DEFAULT_CONFIG, gridToWorld, type MazeConfig } from './geometry';
+} from './curves.js';
+import { buildGeometry, DEFAULT_CONFIG, gridToWorld, type MazeConfig } from './geometry.js';
 
 const SEEDS = [
   'curve-a',
