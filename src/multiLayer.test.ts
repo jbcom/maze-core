@@ -1,6 +1,11 @@
 import { describe, expect, it } from 'vitest';
 import { generateMaze } from './core.js';
-import { assertSolvable, findDeadEnds, generateLayeredMaze, type LayeredMaze } from './multiLayer.js';
+import {
+  assertSolvable,
+  findDeadEnds,
+  generateLayeredMaze,
+  type LayeredMaze,
+} from './multiLayer.js';
 
 const SEEDS = ['alpha', 'beta', 'gamma', 'delta', 'epsilon', 'zeta', 'eta', 'theta'];
 
