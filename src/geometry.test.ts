@@ -3,6 +3,14 @@ import { generateMaze } from './core.js';
 import { buildGeometry, DEFAULT_CONFIG, gridToWorld, worldToGrid } from './geometry.js';
 
 describe('buildGeometry', () => {
+  it('creates one traversable ceiling tile per rail node', () => {
+    const geometry = buildGeometry(generateMaze(7, 7, 'ceiling-grid'));
+    expect(geometry.ceilings).toHaveLength(geometry.railNodes.size);
+    expect(geometry.ceilings.every((tile) => tile.y >= 3 && tile.y <= 4)).toBe(true);
+    expect(new Set(geometry.ceilings.map((tile) => tile.nodeId)).size).toBe(
+      geometry.railNodes.size,
+    );
+  });
   it('creates rail nodes for all cells', () => {
     const layout = generateMaze(7, 7, 'geometry-test');
     const geometry = buildGeometry(layout);

@@ -28,6 +28,15 @@ export interface FloorTile {
   depth: number;
 }
 
+export interface CeilingTile {
+  nodeId: string;
+  x: number;
+  y: number;
+  z: number;
+  width: number;
+  depth: number;
+}
+
 export interface RailNode {
   id: string;
   gridX: number;
@@ -42,6 +51,7 @@ export interface RailNode {
 export interface MazeGeometry {
   walls: WallSegment[];
   floor: FloorTile;
+  ceilings: CeilingTile[];
   railNodes: Map<string, RailNode>;
   centerNodeId: string;
   exitNodeIds: string[];
@@ -82,6 +92,7 @@ export function buildGeometry(
   config: MazeConfig = DEFAULT_CONFIG,
 ): MazeGeometry {
   const walls: WallSegment[] = [];
+  const ceilings: CeilingTile[] = [];
   const railNodes = new Map<string, RailNode>();
 
   const { cellSize, wallHeight, wallThickness } = config;
@@ -154,6 +165,14 @@ export function buildGeometry(
         isCenter: cell.isCenter,
         isExit: cell.isExit,
       });
+      ceilings.push({
+        nodeId,
+        x: worldX,
+        y: 4,
+        z: worldZ,
+        width: cellSize,
+        depth: cellSize,
+      });
     }
   }
 
@@ -172,6 +191,7 @@ export function buildGeometry(
   return {
     walls,
     floor,
+    ceilings,
     railNodes,
     centerNodeId,
     exitNodeIds,
