@@ -207,56 +207,66 @@ describe('generateLayeredMaze', () => {
   });
 });
 
-describe('one-way drop semantics', () => {
-  /** Reachability over the union graph, honouring drop directionality. */
-  function reachableFrom(layered: LayeredMaze, start: { layer: number; x: number; y: number }) {
-    const key = (l: number, x: number, y: number) => `${l}:${x},${y}`;
-    const seen = new Set<string>([key(start.layer, start.x, start.y)]);
-    const queue = [start];
-    let head = 0;
+/** Build a directed adjacency map for the full layered maze graph. */
+/** Build a directed adjacency map for the full layered maze graph. */
+function buildLayeredGraph(
+  layered: LayeredMaze,
+  respectDropDirection = true,
+): Map<string, string[]> {
+  const key = (l: number, x: number, y: number) => `${l}:${x},${y}`;
+  const adjacency = new Map<string, string[]>();
 
-    while (head < queue.length) {
-      const current = queue[head++];
-      const layout = layered.layers[current.layer];
-      const cell = layout.cells[current.y][current.x];
-      const neighbours: { layer: number; x: number; y: number }[] = [];
+  const addEdge = (from: string, to: string) => {
+    const existing = adjacency.get(from);
+    if (existing) existing.push(to);
+    else adjacency.set(from, [to]);
+  };
 
-      if (!cell.walls.north && current.y > 0)
-        neighbours.push({ layer: current.layer, x: current.x, y: current.y - 1 });
-      if (!cell.walls.south && current.y < layout.height - 1)
-        neighbours.push({ layer: current.layer, x: current.x, y: current.y + 1 });
-      if (!cell.walls.west && current.x > 0)
-        neighbours.push({ layer: current.layer, x: current.x - 1, y: current.y });
-      if (!cell.walls.east && current.x < layout.width - 1)
-        neighbours.push({ layer: current.layer, x: current.x + 1, y: current.y });
-
-      for (const connector of layered.connectors) {
-        const { from, to } = connector;
-        if (from.layer === current.layer && from.x === current.x && from.y === current.y) {
-          neighbours.push(to);
-        }
-        // Upward traversal only for non-drop kinds.
-        if (
-          connector.kind !== 'drop' &&
-          to.layer === current.layer &&
-          to.x === current.x &&
-          to.y === current.y
-        ) {
-          neighbours.push(from);
-        }
-      }
-
-      for (const next of neighbours) {
-        const nextKey = key(next.layer, next.x, next.y);
-        if (seen.has(nextKey)) continue;
-        seen.add(nextKey);
-        queue.push(next);
+  layered.layers.forEach((layout, layer) => {
+    for (let y = 0; y < layout.height; y++) {
+      for (let x = 0; x < layout.width; x++) {
+        const fromKey = key(layer, x, y);
+        if (!adjacency.has(fromKey)) adjacency.set(fromKey, []);
+        const cell = layout.cells[y][x];
+        if (!cell.walls.north && y > 0) addEdge(fromKey, key(layer, x, y - 1));
+        if (!cell.walls.south && y < layout.height - 1) addEdge(fromKey, key(layer, x, y + 1));
+        if (!cell.walls.west && x > 0) addEdge(fromKey, key(layer, x - 1, y));
+        if (!cell.walls.east && x < layout.width - 1) addEdge(fromKey, key(layer, x + 1, y));
       }
     }
+  });
 
-    return seen;
+  for (const connector of layered.connectors) {
+    const fromKey = key(connector.from.layer, connector.from.x, connector.from.y);
+    const toKey = key(connector.to.layer, connector.to.x, connector.to.y);
+    // Downward is always traversable.
+    addEdge(fromKey, toKey);
+    // Upward only when drops are one-way — otherwise all connectors are bidirectional.
+    if (!respectDropDirection || connector.kind !== 'drop') addEdge(toKey, fromKey);
   }
 
+  return adjacency;
+}
+
+/** Generic BFS returning every node key reachable from `start`. */
+function reachableFrom(graph: Map<string, string[]>, start: string): Set<string> {
+  const seen = new Set<string>([start]);
+  const queue = [start];
+  let head = 0;
+
+  while (head < queue.length) {
+    const current = queue[head++];
+    for (const next of graph.get(current) ?? []) {
+      if (seen.has(next)) continue;
+      seen.add(next);
+      queue.push(next);
+    }
+  }
+
+  return seen;
+}
+
+describe('one-way drop semantics', () => {
   it('a drop is traversable downward', () => {
     const layered = generateLayeredMaze({
       layers: 2,
@@ -269,7 +279,8 @@ describe('one-way drop semantics', () => {
     expect(drop).toBeDefined();
     if (!drop) return;
 
-    const reachable = reachableFrom(layered, drop.from);
+    const graph = buildLayeredGraph(layered);
+    const reachable = reachableFrom(graph, `${drop.from.layer}:${drop.from.x},${drop.from.y}`);
     expect(reachable.has(`${drop.to.layer}:${drop.to.x},${drop.to.y}`)).toBe(true);
   });
 
@@ -282,12 +293,13 @@ describe('one-way drop semantics', () => {
       connectorsPerLayer: 3,
     });
 
+    const graph = buildLayeredGraph(layered);
     const bidirectional = layered.connectors.filter((c) => c.kind !== 'drop');
     expect(bidirectional.length).toBeGreaterThan(0);
 
     bidirectional.forEach((connector) => {
       // Starting at the lower cell, the upper cell must be reachable.
-      const reachable = reachableFrom(layered, connector.to);
+      const reachable = reachableFrom(graph, `${connector.to.layer}:${connector.to.x},${connector.to.y}`);
       expect(reachable.has(`${connector.from.layer}:${connector.from.x},${connector.from.y}`)).toBe(
         true,
       );
