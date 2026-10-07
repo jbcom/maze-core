@@ -1,57 +1,111 @@
 {
-  "name": "@arcade-cabinet/maze-core",
-  "version": "0.1.1",
-  "description": "Engine-agnostic maze generation for arcade-cabinet fleet games: seeded grid mazes, rail-node geometry, multi-layer topology with provable cross-layer solvability, and curved-wall outlines. Extracted from Beppo-Laughs.",
-  "type": "module",
-  "license": "UNLICENSED",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/jbcom/maze-core.git"
-  },
+  "name": "maze-core",
+  "version": "0.2.0",
+  "description": "Engine-agnostic, deterministic maze generation: seeded grid mazes, rail-node geometry, multi-layer topology with provable solvability, and curved-wall outlines.",
+  "keywords": [
+    "maze",
+    "maze-generator",
+    "procedural-generation",
+    "seeded",
+    "deterministic",
+    "game-dev",
+    "level-generation",
+    "labyrinth",
+    "typescript"
+  ],
+  "homepage": "https://github.com/jbcom/maze-core#readme",
   "bugs": {
     "url": "https://github.com/jbcom/maze-core/issues"
   },
-  "engines": {
-    "node": ">=24"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jbcom/maze-core.git"
   },
-  "packageManager": "pnpm@12.9.1",
-  "publishConfig": {
-    "access": "restricted",
-    "registry": "https://registry.npmjs.org/"
-  },
+  "license": "MIT",
+  "author": "Jon Bogaty <jon@jonbogaty.com>",
+  "type": "module",
   "sideEffects": false,
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "main": "./dist/cjs/index.cjs",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/esm/index.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
+      "import": {
+        "types": "./dist/esm/index.d.ts",
+        "default": "./dist/esm/index.js"
+      },
+      "require": {
+        "types": "./dist/cjs/index.d.cts",
+        "default": "./dist/cjs/index.cjs"
+      }
     },
     "./package.json": "./package.json"
   },
   "files": [
+    "CHANGELOG.md",
+    "CONTRIBUTING.md",
+    "SECURITY.md",
     "dist",
-    "README.md",
-    "CHANGELOG.md"
+    "docs/API.md",
+    "docs/ARCHITECTURE.md",
+    "examples",
+    "llms.txt"
   ],
   "scripts": {
     "build": "node scripts/build.mjs",
-    "prepack": "node scripts/build.mjs",
+    "clean": "node -e \"require('node:fs').rmSync('dist', { recursive: true, force: true })\"",
+    "coverage": "vitest run --coverage",
+    "docs:build": "pnpm --filter maze-core-docs build",
+    "docs:check": "pnpm --filter maze-core-docs check",
+    "docs:dev": "pnpm --filter maze-core-docs dev",
+    "examples:check": "node examples/basic.mjs && node examples/commonjs.cjs",
     "lint": "biome check .",
+    "lint:docs": "markdownlint-cli2 README.md CONTRIBUTING.md SECURITY.md CODE_OF_CONDUCT.md CHANGELOG.md AGENTS.md \"docs/**/*.md\" \"!docs/node_modules/**\" \"!docs/dist/**\" .github/PULL_REQUEST_TEMPLATE.md",
     "lint:fix": "biome check --write .",
-    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "package:check": "publint && attw --pack . && node scripts/verify-package.mjs",
+    "prepack": "node scripts/build.mjs",
+    "prepare": "simple-git-hooks",
     "test": "vitest run",
-    "smoke:consumer": "node scripts/consumer-smoke.mjs",
-    "verify": "pnpm run lint && pnpm run typecheck && pnpm run test && pnpm run build && pnpm run smoke:consumer"
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "verify": "pnpm run lint && pnpm run lint:docs && pnpm run typecheck && pnpm run coverage && pnpm run build && pnpm run examples:check && pnpm run package:check"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "pnpm exec lint-staged",
+    "commit-msg": "pnpm exec commitlint --edit $1"
+  },
+  "lint-staged": {
+    "*.{ts,js,mjs,cjs,json}": [
+      "biome check --write --no-errors-on-unmatched"
+    ],
+    "*.md": [
+      "markdownlint-cli2"
+    ]
   },
   "dependencies": {
     "seedrandom": "^3.0.5"
   },
   "devDependencies": {
+    "@arethetypeswrong/cli": "^0.18.5",
     "@biomejs/biome": "2.5.15",
+    "@commitlint/cli": "^21.2.2",
+    "@commitlint/config-conventional": "^21.2.2",
     "@types/node": "^24.13.3",
     "@types/seedrandom": "^3.0.8",
-    "typescript": "~5.9.3",
+    "@vitest/coverage-v8": "^5.0.3",
+    "lint-staged": "^17.3.0",
+    "markdownlint-cli2": "^0.23.2",
+    "publint": "^0.3.24",
+    "simple-git-hooks": "^2.13.1",
+    "typescript": "7.0.2",
     "vitest": "^5.0.3"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "packageManager": "pnpm@12.10.1",
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
   }
 }

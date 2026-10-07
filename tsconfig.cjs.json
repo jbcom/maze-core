@@ -1,12 +1,14 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
+    "module": "CommonJS",
+    "moduleResolution": "bundler",
     "types": [],
-    "noEmit": false,
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true,
-    "outDir": "dist",
+    "noEmit": false,
+    "outDir": "dist/cjs",
     "rootDir": "src"
   },
   "include": ["src"],
