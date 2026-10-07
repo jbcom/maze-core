@@ -1,6 +1,6 @@
 {
   "name": "maze-core",
-  "version": "0.3.0",
+  "version": "0.2.0",
   "description": "Engine-agnostic, deterministic maze generation: seeded grid mazes, rail-node geometry, multi-layer topology with provable solvability, and curved-wall outlines.",
   "keywords": [
     "maze",
