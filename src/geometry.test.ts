@@ -1,6 +1,12 @@
 import { describe, expect, it } from 'vitest';
 import { generateMaze } from './core.js';
-import { buildGeometry, DEFAULT_CONFIG, gridToWorld, worldToGrid } from './geometry.js';
+import {
+  buildGeometry,
+  DEFAULT_CONFIG,
+  getNodeConnections,
+  gridToWorld,
+  worldToGrid,
+} from './geometry.js';
 
 describe('buildGeometry', () => {
   it('creates one traversable ceiling tile per rail node', () => {
@@ -263,5 +269,21 @@ describe('RailNode structure', () => {
       if (node.isCenter) centerCount++;
     }
     expect(centerCount).toBe(1);
+  });
+});
+
+describe('getNodeConnections', () => {
+  const geometry = buildGeometry(generateMaze(7, 7, 'node-connections'));
+
+  it('resolves a node to the neighbour nodes it connects to', () => {
+    const centre = geometry.railNodes.get(geometry.centerNodeId);
+    expect(centre).toBeDefined();
+    const neighbours = getNodeConnections(geometry, geometry.centerNodeId);
+    expect(neighbours.map((n) => n.id).sort()).toEqual([...(centre?.connections ?? [])].sort());
+    expect(neighbours.length).toBeGreaterThan(0);
+  });
+
+  it('returns an empty list for an unknown node id', () => {
+    expect(getNodeConnections(geometry, 'nowhere')).toEqual([]);
   });
 });

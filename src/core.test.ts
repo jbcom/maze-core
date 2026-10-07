@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { generateMaze, type MazeCell } from './core.js';
+import { generateMaze, getConnections, type MazeCell } from './core.js';
 
 describe('generateMaze', () => {
   it('generates maze with correct dimensions', () => {
@@ -137,5 +137,45 @@ describe('generateMaze', () => {
     }
 
     expect(foundExit).toBe(true);
+  });
+});
+
+describe('getConnections', () => {
+  const maze = generateMaze(9, 9, 'connections');
+
+  it('lists exactly the open neighbours of an interior cell', () => {
+    for (const row of maze.cells) {
+      for (const cell of row) {
+        if (cell.x === 0 || cell.y === 0 || cell.x === 8 || cell.y === 8) continue;
+        const open = (['north', 'south', 'east', 'west'] as const).filter((d) => !cell.walls[d]);
+        const connections = getConnections(maze, cell.x, cell.y);
+        expect(connections.map((c) => c.direction).sort()).toEqual([...open].sort());
+        for (const c of connections) {
+          expect(Math.abs(c.x - cell.x) + Math.abs(c.y - cell.y)).toBe(1);
+        }
+      }
+    }
+  });
+
+  it('is symmetric: if A reaches B then B reaches A', () => {
+    for (const passage of maze.passages) {
+      const back = getConnections(maze, passage.to.x, passage.to.y);
+      expect(back.some((c) => c.x === passage.from.x && c.y === passage.from.y)).toBe(true);
+    }
+  });
+
+  it('returns nothing for a coordinate outside the grid', () => {
+    expect(getConnections(maze, -1, 0)).toEqual([]);
+    expect(getConnections(maze, 0, 99)).toEqual([]);
+    expect(getConnections(maze, 99, 99)).toEqual([]);
+  });
+
+  it('lets an exit cell step out of the maze through its perimeter side', () => {
+    for (const exit of maze.exits) {
+      const outside = getConnections(maze, exit.x, exit.y).filter(
+        (c) => c.x < 0 || c.y < 0 || c.x >= maze.width || c.y >= maze.height,
+      );
+      expect(outside).toHaveLength(1);
+    }
   });
 });
