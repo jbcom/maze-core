@@ -37,11 +37,13 @@ A layout is a pure function of its arguments. Any change that alters what `gener
 `generateLayeredMaze` or `buildCurvedWalls` produces for an existing seed breaks every saved game,
 replay and shared seed built on it, so it is a breaking change and is released as one.
 
-## Toolchain: Node 26 and pnpm 12 to build, Node 24 as the floor to run
+## Toolchain: Node 26 and pnpm 12 by default, Node 22 as the supported floor
 
-`engines` is `>=24` with no ceiling and `@types/node` stays on 24: a library must not reach for an API
-its oldest supported consumer lacks. CI runs the full gate on Node 24 and Node 26. TypeScript is 7
-(native) with `moduleResolution: bundler`; Vitest is 5.
+`engines` is `>=22` with no ceiling. Node.js 22, 24 and 26 are the maintained lines tested in CI.
+Node 26 is a contributor default, not an exact-version requirement. The full library gate and
+packed ESM/CommonJS consumer checks pass on Node 22 and 26 without changing runtime code or exports.
+`@types/node` remains on 24; new runtime APIs still need verification on the Node 22 floor.
+TypeScript is 7 (native) with `moduleResolution: bundler`; Vitest is 5.
 
 ## Tests live next to the code
 

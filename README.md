@@ -24,7 +24,7 @@ npm install seeded-maze
 # or: pnpm add seeded-maze
 ```
 
-Requires Node.js 24 or newer. `seeded-maze` ships native ESM and CommonJS entry points with
+Requires Node.js 22 or newer. `seeded-maze` ships native ESM and CommonJS entry points with
 format-correct TypeScript declarations, and one runtime dependency,
 [`seedrandom`](https://www.npmjs.com/package/seedrandom).
 
@@ -72,7 +72,7 @@ The full reference is in [`docs/API.md`](docs/API.md); the invariants behind it 
 
 ## Compatibility
 
-- Node.js 24 and newer, tested on 24 and 26.
+- Node.js 22 and newer, tested on the maintained lines 22, 24 and 26.
 - Plain data structures only, so it runs in browsers and workers through any bundler.
 - A seed is part of the contract: a change that alters what a seed produces is released as a breaking
   change.

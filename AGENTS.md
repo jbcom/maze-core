@@ -5,6 +5,8 @@ from reading the code alone.
 
 ## Toolchain
 
+- Supported Node.js lines: 22, 24 and 26 (`engines.node: >=22`). Node 26 in `.nvmrc` and
+  `mise.toml` is the local default, not a required exact version. CI verifies all three lines.
 - Package manager: pnpm, pinned in `package.json#packageManager`. Use `mise install` (reads
   `mise.toml`) for a matching local Node/pnpm toolchain, or `corepack enable` if mise isn't available.
 - This is a pnpm workspace with two members: `.` (the published library) and `docs/` (the private

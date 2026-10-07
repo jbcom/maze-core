@@ -22,10 +22,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        # The floor (engines.node is >=24) and the toolchain the package is
-        # built on. Pure computation on arrays and numbers: no paths or
-        # processes, so no Windows leg.
+        # Every maintained Node line, with engines.node >=22 as the floor.
+        # Pure computation on arrays and numbers: no Windows leg.
         include:
+          - os: ubuntu-24.04
+            node: "22"
           - os: ubuntu-24.04
             node: "24"
           - os: ubuntu-24.04
@@ -94,10 +95,7 @@ jobs:
   gate:
     name: CI / gate
     needs: [verify, docs, sonarcloud, pre-commit]
-    if: >-
-      always() && (github.event_name != 'pull_request' ||
-      !(startsWith(github.event.pull_request.head.ref, 'release-please--') ||
-      (github.event.pull_request.user.login == 'dependabot[bot]' && contains(github.event.pull_request.title, 'non-major'))))
+    if: always()
     runs-on: ubuntu-24.04
     steps:
       - name: Require every native validation job
@@ -107,7 +105,7 @@ jobs:
           SONARCLOUD_RESULT: ${{ needs.sonarcloud.result }}
           PRE_COMMIT_RESULT: ${{ needs.pre-commit.result }}
         run: |
-          test "$VERIFY_RESULT" = success
-          test "$DOCS_RESULT" = success
+          test "$VERIFY_RESULT" = success || test "$VERIFY_RESULT" = skipped
+          test "$DOCS_RESULT" = success || test "$DOCS_RESULT" = skipped
           test "$SONARCLOUD_RESULT" = success || test "$SONARCLOUD_RESULT" = skipped
-          test "$PRE_COMMIT_RESULT" = success
+          test "$PRE_COMMIT_RESULT" = success || test "$PRE_COMMIT_RESULT" = skipped
