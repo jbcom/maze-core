@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.2.1](https://github.com/jbcom/seeded-maze/compare/v0.2.0...v0.2.1) (2026-10-07)
+
+
+### Bug Fixes
+
+* support every maintained Node line (22, 24 and 26) ([699051d](https://github.com/jbcom/seeded-maze/commit/699051d56896592ad47c57131de36f8c912b2233))
+* support every maintained Node line (22, 24 and 26) ([37075a8](https://github.com/jbcom/seeded-maze/commit/37075a8579c83dafbe3f4bed507380cacf01a707))
+
 ## 0.2.0 (2026-10-07)
 
 First release on npmjs, under the name `seeded-maze`, as open source under the MIT licence.
