@@ -1,49 +1,41 @@
 # Decisions
 
-## 2026-10-07: moved out of Beppo-Laughs into its own repository
+## 2026-10-07: CommonJS ships alongside ESM
 
-**Decision.** `@arcade-cabinet/maze-core` left `Beppo-Laughs/packages/maze-core` for
-`arcade-cabinet/maze-core`, with its history (`git filter-repo --subdirectory-filter`).
-Beppo-Laughs now installs it from the registry like any other consumer (shadow-and-gold
-already did).
+**Decision.** The package ships native ESM (`dist/esm`) and CommonJS (`dist/cjs`), each with its own
+declarations, behind `import` and `require` conditions in `exports`.
 
-**Why.** The owner: "You shouldn't need other games as dependencies for shared packages."
-Beppo-Laughs had kept it as `workspace:*` because it was the publisher; that made a second
-game depend on a package whose source lived in the first game's repository, and the package
-could only be released through that game's lockfile and workspace.
+**Why.** The earlier releases were ESM-only. Nothing about the code makes CommonJS wrong: it has no
+top-level await, no `import.meta` and one dependency that is itself CommonJS. A public npm package is
+installed by projects the maintainer never sees, and a CommonJS toolchain (older test runners, Jest
+setups, plain `require` scripts) should not need a dynamic `import()` to call a pure function. The
+cost is one small build script, and both formats are held to the same behaviour by the packed-consumer
+check, which compares ESM and CommonJS output for the same seed.
 
-## The repository shape is the fleet package shape
+**How.** `tsc` emits both formats from two tsconfigs with no bundler. The CommonJS files are renamed
+to `.cjs` / `.d.cts` and `dist/cjs/package.json` marks the directory `commonjs`, so the same files
+resolve correctly under `"type": "module"`. `arethetypeswrong` and `publint` run in `pnpm verify`.
 
-Same as `arcade-cabinet/mobile`, `input-joystick` and `persistence-save`: `ci.yml` runs
-`pnpm verify` on every push and pull request; `release.yml` runs release-please and a publish
-job that reconciles the manifest version against tags and the registry, packs twice for byte
-identity and proves the published version anonymously. Tags are plain `v<version>`.
+## 2026-10-07: MIT licence, published to npmjs as `maze-core`
 
-Biome uses the style the source was written in (single quotes, semicolons, trailing commas),
-so the move did not reformat it; one over-long line in `src/multiLayer.test.ts` was the only
-source change. `prepack` builds, so a bare `npm pack` can never ship a stale or missing `dist`.
+The package is open source. The licence is MIT, the npm name is the unscoped `maze-core`, and the
+first release on npmjs is 0.2.0. Earlier 0.1.x releases came from a private registry and are not on
+npmjs. Releases after 0.2.0 are cut by release-please and published from CI by OIDC trusted
+publishing with provenance.
 
-## The package stays ESM-only
+## The seed is part of the API
 
-It was ESM-only in Beppo-Laughs (`exports` has only `import`) and a relocation does not change
-the module format, so no CommonJS build was added. The consumer smoke therefore has an ESM leg
-only.
-
-## `tsconfig.json` no longer extends the game's
-
-The package's tsconfig extended `../../tsconfig.json`, the game's. The compiler options it
-relied on are now inline in `tsconfig.json` (strict, `noUnused*`, bundler resolution, ES2022).
-`tsconfig.build.json` extends it for the emit (declarations, source maps, tests excluded), so
-`pnpm typecheck` covers the colocated `*.test.ts` files that the build leaves out of `dist`.
+A layout is a pure function of its arguments. Any change that alters what `generateMaze`,
+`generateLayeredMaze` or `buildCurvedWalls` produces for an existing seed breaks every saved game,
+replay and shared seed built on it, so it is a breaking change and is released as one.
 
 ## Toolchain: Node 26 and pnpm 12 to build, Node 24 as the floor to run
 
-Built where the fleet is moving. `engines` is `>=24` with no ceiling and `@types/node` stays on
-24: a library must not reach for an API its oldest supported consumer lacks. TypeScript is 5.9
-and Vitest 5.
+`engines` is `>=24` with no ceiling and `@types/node` stays on 24: a library must not reach for an API
+its oldest supported consumer lacks. CI runs the full gate on Node 24 and Node 26. TypeScript is 7
+(native) with `moduleResolution: bundler`; Vitest is 5.
 
-## Versioning continues from the registry
+## Tests live next to the code
 
-0.1.0 and 0.1.1 were published from Beppo-Laughs. The manifest starts at 0.1.1 with
-`bootstrap-sha` on the last imported commit, so release-please computes the next version from
-this repository's own commits.
+The unit tests are colocated as `src/*.test.ts` and excluded from the build output; `tsconfig.json`
+covers them for typechecking. `tests/` holds the checks that exercise the package as a whole.

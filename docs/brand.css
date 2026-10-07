@@ -1,0 +1,14 @@
+:root {
+  --sourcey-primary: #1f4d3a;
+  --sourcey-primary-light: #3f8f6b;
+  --sourcey-primary-dark: #0e2a1f;
+  --maze-accent: #8a6a1e;
+}
+
+header img {
+  border-radius: 0.35rem;
+}
+
+a:hover {
+  color: var(--maze-accent);
+}

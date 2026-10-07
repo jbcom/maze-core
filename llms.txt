@@ -1,0 +1,19 @@
+# maze-core
+
+> Deterministic, engine-agnostic maze generation: seeded grid mazes, rail-node geometry, curved-wall
+> outlines, and multi-layer mazes with a solvability proof. Plain data in and out; ESM and CommonJS;
+> one dependency (seedrandom).
+
+## Docs
+
+- [Documentation site](https://jbcom.github.io/maze-core/): the published, browsable version of
+  everything below.
+- [README](https://github.com/jbcom/maze-core/blob/main/README.md): install, quick start, API overview.
+- [API reference](https://github.com/jbcom/maze-core/blob/main/docs/API.md): signatures and behavior
+  for every export.
+- [Architecture](https://github.com/jbcom/maze-core/blob/main/docs/ARCHITECTURE.md): module
+  boundaries, invariants, the seed contract, intentional limits.
+- [AGENTS.md](https://github.com/jbcom/maze-core/blob/main/AGENTS.md): toolchain, invariants not to
+  violate, and doc/test sync obligations for an autonomous coding agent working in this repository.
+- [CONTRIBUTING.md](https://github.com/jbcom/maze-core/blob/main/CONTRIBUTING.md): local setup, the
+  `pnpm verify` gate, commit and release conventions.
