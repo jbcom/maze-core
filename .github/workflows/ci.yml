@@ -105,7 +105,9 @@ jobs:
           SONARCLOUD_RESULT: ${{ needs.sonarcloud.result }}
           PRE_COMMIT_RESULT: ${{ needs.pre-commit.result }}
         run: |
-          test "$VERIFY_RESULT" = success || test "$VERIFY_RESULT" = skipped
-          test "$DOCS_RESULT" = success || test "$DOCS_RESULT" = skipped
-          test "$SONARCLOUD_RESULT" = success || test "$SONARCLOUD_RESULT" = skipped
-          test "$PRE_COMMIT_RESULT" = success || test "$PRE_COMMIT_RESULT" = skipped
+          for result in "$VERIFY_RESULT" "$DOCS_RESULT" "$SONARCLOUD_RESULT" "$PRE_COMMIT_RESULT"; do
+            case "$result" in
+              success|skipped) ;;
+              *) echo "Required CI job ended with: $result"; exit 1 ;;
+            esac
+          done
