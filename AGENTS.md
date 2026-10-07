@@ -5,6 +5,8 @@ from reading the code alone.
 
 ## Toolchain
 
+- Supported Node.js lines: 22, 24 and 26 (`engines.node: >=22`). Node 26 in `.nvmrc` and
+  `mise.toml` is the local default, not a required exact version. CI verifies all three lines.
 - Package manager: pnpm, pinned in `package.json#packageManager`. Use `mise install` (reads
   `mise.toml`) for a matching local Node/pnpm toolchain, or `corepack enable` if mise isn't available.
 - This is a pnpm workspace with two members: `.` (the published library) and `docs/` (the private
@@ -50,6 +52,10 @@ A change to the public surface of `src/*.ts` needs matching updates in:
   They mirror what CI enforces; don't bypass them with `--no-verify`.
 - The `main` branch ruleset requires every CI check to pass on the exact merge commit and does not
   require human review.
+- `scripts/apply-branch-ruleset.mjs` applies the standard branch and tag rulesets with no Copilot
+  review or Code Quality rule. Its defaults target `seeded-maze` and require `CI / gate`, `title`,
+  `Repository Policy / gate` and `Dependency Review / gate`. Run it only when repository
+  administration is explicitly authorized. Its formatting preserves the canonical script.
 
 ## Files most likely to surprise you
 

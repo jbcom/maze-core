@@ -9,7 +9,7 @@ description: Install seeded-maze and generate, measure and render your first maz
 npm install seeded-maze
 ```
 
-Use Node.js 24 or newer. seeded-maze ships native ESM and CommonJS entry points with format-correct
+Use Node.js 22 or newer. seeded-maze ships native ESM and CommonJS entry points with format-correct
 TypeScript declarations.
 
 ## A single maze

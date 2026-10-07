@@ -14,7 +14,7 @@ pnpm verify   # lint, typecheck, test, build, package checks: the same gate CI r
 ```
 
 Without mise, use `corepack` so pnpm matches the version pinned in `package.json#packageManager`, on
-any Node release in the `engines.node` range (`>=24`; CI verifies 24 and 26):
+any Node release in the `engines.node` range (`>=22`; CI verifies 22, 24 and 26):
 
 ```sh
 corepack enable

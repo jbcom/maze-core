@@ -33,10 +33,12 @@ describe('package contract', () => {
     expect(read('.npmrc')).toBe('registry=https://registry.npmjs.org/\nprovenance=true\n');
   });
 
-  it('builds on pnpm 12 and Node 26 and runs on Node 24', () => {
+  it('builds on pnpm 12 and supports Node 22, 24 and 26', () => {
     expect(manifest.packageManager).toMatch(/^pnpm@12\.\d+\.\d+$/);
-    expect(manifest.engines).toEqual({ node: '>=24' });
+    expect(manifest.engines).toEqual({ node: '>=22' });
     expect(read('.nvmrc').trim()).toBe('26');
+    const ci = read('.github/workflows/ci.yml');
+    expect([...ci.matchAll(/node: "(\d+)"/g)].map((match) => match[1])).toEqual(['22', '24', '26']);
   });
 
   it('ships ESM and CommonJS, each with its own declarations', () => {
