@@ -4,12 +4,22 @@
   "description": "Engine-agnostic maze generation for arcade-cabinet fleet games: seeded grid mazes, rail-node geometry, multi-layer topology with provable cross-layer solvability, and curved-wall outlines. Extracted from Beppo-Laughs.",
   "type": "module",
   "license": "UNLICENSED",
-  "publishConfig": {
-    "access": "restricted"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jbcom/maze-core.git"
   },
-  "files": [
-    "dist"
-  ],
+  "bugs": {
+    "url": "https://github.com/jbcom/maze-core/issues"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "packageManager": "pnpm@12.9.1",
+  "publishConfig": {
+    "access": "restricted",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "sideEffects": false,
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
@@ -19,18 +29,29 @@
     },
     "./package.json": "./package.json"
   },
-  "sideEffects": false,
+  "files": [
+    "dist",
+    "README.md",
+    "CHANGELOG.md"
+  ],
   "scripts": {
-    "build": "tsc -p tsconfig.json",
+    "build": "node scripts/build.mjs",
+    "prepack": "node scripts/build.mjs",
+    "lint": "biome check .",
+    "lint:fix": "biome check --write .",
     "typecheck": "tsc --noEmit -p tsconfig.json",
-    "test": "vitest run"
+    "test": "vitest run",
+    "smoke:consumer": "node scripts/consumer-smoke.mjs",
+    "verify": "pnpm run lint && pnpm run typecheck && pnpm run test && pnpm run build && pnpm run smoke:consumer"
   },
   "dependencies": {
     "seedrandom": "^3.0.5"
   },
   "devDependencies": {
+    "@biomejs/biome": "2.5.15",
+    "@types/node": "^24.13.3",
     "@types/seedrandom": "^3.0.8",
-    "typescript": "^5.9.3",
-    "vitest": "^4.0.17"
+    "typescript": "~5.9.3",
+    "vitest": "^5.0.3"
   }
 }

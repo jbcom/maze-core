@@ -299,7 +299,10 @@ describe('one-way drop semantics', () => {
 
     bidirectional.forEach((connector) => {
       // Starting at the lower cell, the upper cell must be reachable.
-      const reachable = reachableFrom(graph, `${connector.to.layer}:${connector.to.x},${connector.to.y}`);
+      const reachable = reachableFrom(
+        graph,
+        `${connector.to.layer}:${connector.to.x},${connector.to.y}`,
+      );
       expect(reachable.has(`${connector.from.layer}:${connector.from.x},${connector.from.y}`)).toBe(
         true,
       );
