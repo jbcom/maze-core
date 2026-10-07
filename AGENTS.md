@@ -52,6 +52,10 @@ A change to the public surface of `src/*.ts` needs matching updates in:
   They mirror what CI enforces; don't bypass them with `--no-verify`.
 - The `main` branch ruleset requires every CI check to pass on the exact merge commit and does not
   require human review.
+- `scripts/apply-branch-ruleset.mjs` applies the standard branch and tag rulesets with no Copilot
+  review or Code Quality rule. Its defaults target `seeded-maze` and require `CI / gate`, `title`,
+  `Repository Policy / gate` and `Dependency Review / gate`. Run it only when repository
+  administration is explicitly authorized. Its formatting preserves the canonical script.
 
 ## Files most likely to surprise you
 
