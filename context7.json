@@ -1,6 +1,6 @@
 {
   "$schema": "https://context7.com/schema/context7.json",
-  "projectTitle": "maze-core",
+  "projectTitle": "seeded-maze",
   "description": "Deterministic maze generation: seeded grid mazes, geometry, curved walls, and multi-layer mazes with a solvability proof.",
   "branch": "main",
   "folders": ["docs", "src", "examples"],

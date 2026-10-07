@@ -5,7 +5,7 @@
 Please do not open a public issue for a security problem.
 
 Report it privately through
-[GitHub Security Advisories](https://github.com/jbcom/maze-core/security/advisories/new), which lets
+[GitHub Security Advisories](https://github.com/jbcom/seeded-maze/security/advisories/new), which lets
 us discuss and fix the issue before it is disclosed.
 
 You can expect an acknowledgement within a few days. If a fix is warranted, we will prepare it

@@ -1,5 +1,5 @@
 {
-  "name": "maze-core",
+  "name": "seeded-maze",
   "version": "0.2.0",
   "description": "Engine-agnostic, deterministic maze generation: seeded grid mazes, rail-node geometry, multi-layer topology with provable solvability, and curved-wall outlines.",
   "keywords": [
@@ -13,13 +13,13 @@
     "labyrinth",
     "typescript"
   ],
-  "homepage": "https://github.com/jbcom/maze-core#readme",
+  "homepage": "https://jonbogaty.com/seeded-maze/",
   "bugs": {
-    "url": "https://github.com/jbcom/maze-core/issues"
+    "url": "https://github.com/jbcom/seeded-maze/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jbcom/maze-core.git"
+    "url": "git+https://github.com/jbcom/seeded-maze.git"
   },
   "license": "MIT",
   "author": "Jon Bogaty <jon@jonbogaty.com>",
@@ -46,6 +46,7 @@
     "CONTRIBUTING.md",
     "SECURITY.md",
     "dist",
+    "!docs/dist",
     "docs/API.md",
     "docs/ARCHITECTURE.md",
     "examples",
@@ -55,9 +56,9 @@
     "build": "node scripts/build.mjs",
     "clean": "node -e \"require('node:fs').rmSync('dist', { recursive: true, force: true })\"",
     "coverage": "vitest run --coverage",
-    "docs:build": "pnpm --filter maze-core-docs build",
-    "docs:check": "pnpm --filter maze-core-docs check",
-    "docs:dev": "pnpm --filter maze-core-docs dev",
+    "docs:build": "pnpm --filter seeded-maze-docs build",
+    "docs:check": "pnpm --filter seeded-maze-docs check",
+    "docs:dev": "pnpm --filter seeded-maze-docs dev",
     "examples:check": "node examples/basic.mjs && node examples/commonjs.cjs",
     "lint": "biome check .",
     "lint:docs": "markdownlint-cli2 README.md CONTRIBUTING.md SECURITY.md CODE_OF_CONDUCT.md CHANGELOG.md AGENTS.md \"docs/**/*.md\" \"!docs/node_modules/**\" \"!docs/dist/**\" .github/PULL_REQUEST_TEMPLATE.md",

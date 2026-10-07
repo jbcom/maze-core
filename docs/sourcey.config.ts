@@ -1,9 +1,9 @@
 import { defineConfig, markdown } from 'sourcey';
 
 export default defineConfig({
-  name: 'maze-core',
-  siteUrl: 'https://jbcom.github.io',
-  baseUrl: '/maze-core',
+  name: 'seeded-maze',
+  siteUrl: 'https://jonbogaty.com',
+  baseUrl: '/seeded-maze',
   theme: {
     preset: 'default',
     colors: {
@@ -22,16 +22,16 @@ export default defineConfig({
     },
     css: ['./brand.css'],
   },
-  logo: { light: './assets/favicon.svg', href: '/maze-core/' },
+  logo: { light: './assets/favicon.svg', href: '/seeded-maze/' },
   favicon: './assets/favicon.svg',
-  repo: 'https://github.com/jbcom/maze-core',
+  repo: 'https://github.com/jbcom/seeded-maze',
   editBranch: 'main',
   editBasePath: 'docs',
   prettyUrls: 'slash',
   navbar: {
     links: [
-      { type: 'github', href: 'https://github.com/jbcom/maze-core' },
-      { type: 'npm', href: 'https://www.npmjs.com/package/maze-core' },
+      { type: 'github', href: 'https://github.com/jbcom/seeded-maze' },
+      { type: 'npm', href: 'https://www.npmjs.com/package/seeded-maze' },
     ],
   },
   footer: {
@@ -39,12 +39,12 @@ export default defineConfig({
       {
         type: 'link',
         label: 'MIT License',
-        href: 'https://github.com/jbcom/maze-core/blob/main/LICENSE',
+        href: 'https://github.com/jbcom/seeded-maze/blob/main/LICENSE',
       },
       {
         type: 'link',
         label: 'Security',
-        href: 'https://github.com/jbcom/maze-core/security/policy',
+        href: 'https://github.com/jbcom/seeded-maze/security/policy',
       },
     ],
   },

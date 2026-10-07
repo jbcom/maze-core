@@ -1,8 +1,8 @@
-# maze-core
+# seeded-maze
 
-[![CI](https://github.com/jbcom/maze-core/actions/workflows/ci.yml/badge.svg)](https://github.com/jbcom/maze-core/actions/workflows/ci.yml)
-[![npm](https://img.shields.io/npm/v/maze-core)](https://www.npmjs.com/package/maze-core)
-[![license](https://img.shields.io/npm/l/maze-core)](LICENSE)
+[![CI](https://github.com/jbcom/seeded-maze/actions/workflows/ci.yml/badge.svg)](https://github.com/jbcom/seeded-maze/actions/workflows/ci.yml)
+[![npm](https://img.shields.io/npm/v/seeded-maze)](https://www.npmjs.com/package/seeded-maze)
+[![license](https://img.shields.io/npm/l/seeded-maze)](LICENSE)
 
 Deterministic maze generation for games and tools. Pure data in and out: no rendering library
 types, no globals you have to reset, and the same seed always produces the same maze.
@@ -20,11 +20,11 @@ types, no globals you have to reset, and the same seed always produces the same 
 ## Install
 
 ```sh
-npm install maze-core
-# or: pnpm add maze-core
+npm install seeded-maze
+# or: pnpm add seeded-maze
 ```
 
-Requires Node.js 24 or newer. `maze-core` ships native ESM and CommonJS entry points with
+Requires Node.js 24 or newer. `seeded-maze` ships native ESM and CommonJS entry points with
 format-correct TypeScript declarations, and one runtime dependency,
 [`seedrandom`](https://www.npmjs.com/package/seedrandom).
 
@@ -38,7 +38,7 @@ import {
   findDeadEnds,
   generateLayeredMaze,
   generateMaze,
-} from 'maze-core';
+} from 'seeded-maze';
 
 // A 9 x 9 maze. The same seed gives the same layout on every run and every machine.
 const layout = generateMaze(9, 9, 'daily-2026-10-07');
@@ -53,7 +53,7 @@ console.log(assertSolvable(tower).solvable);
 CommonJS works the same way:
 
 ```js
-const { generateMaze } = require('maze-core');
+const { generateMaze } = require('seeded-maze');
 ```
 
 Runnable ESM and CommonJS examples are in [`examples/`](examples).
@@ -79,7 +79,7 @@ The full reference is in [`docs/API.md`](docs/API.md); the invariants behind it 
 
 ## Links
 
-- [Documentation](https://jbcom.github.io/maze-core/)
+- [Documentation](https://jonbogaty.com/seeded-maze/)
 - [Changelog](CHANGELOG.md)
 - [Contributing](CONTRIBUTING.md) and [security policy](SECURITY.md)
 

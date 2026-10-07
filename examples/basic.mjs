@@ -6,7 +6,7 @@ import {
   findDeadEnds,
   generateLayeredMaze,
   generateMaze,
-} from 'maze-core';
+} from 'seeded-maze';
 
 // One seeded maze: the same seed always gives the same layout.
 const layout = generateMaze(9, 9, 'level-1');

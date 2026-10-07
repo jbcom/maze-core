@@ -11,6 +11,7 @@ const manifest = JSON.parse(read('package.json')) as {
   name: string;
   license: string;
   version: string;
+  homepage: string;
   repository: { type: string; url: string };
   engines: Record<string, string>;
   packageManager: string;
@@ -20,12 +21,13 @@ const manifest = JSON.parse(read('package.json')) as {
 };
 
 describe('package contract', () => {
-  it('is the public MIT package maze-core, published from GitHub', () => {
-    expect(manifest.name).toBe('maze-core');
+  it('is the public MIT package seeded-maze, published from GitHub', () => {
+    expect(manifest.name).toBe('seeded-maze');
+    expect(manifest.homepage).toBe('https://jonbogaty.com/seeded-maze/');
     expect(manifest.license).toBe('MIT');
     expect(manifest.repository).toEqual({
       type: 'git',
-      url: 'git+https://github.com/jbcom/maze-core.git',
+      url: 'git+https://github.com/jbcom/seeded-maze.git',
     });
     expect(manifest.publishConfig).toEqual({ access: 'public', provenance: true });
     expect(read('.npmrc')).toBe('registry=https://registry.npmjs.org/\nprovenance=true\n');
@@ -57,7 +59,7 @@ describe('package contract', () => {
       packages: Record<string, { 'package-name': string }>;
     };
     expect(Object.keys(config.packages)).toEqual(['.']);
-    expect(config.packages['.']?.['package-name']).toBe('maze-core');
+    expect(config.packages['.']?.['package-name']).toBe('seeded-maze');
     expect(JSON.parse(read('.release-please-manifest.json'))).toEqual({ '.': manifest.version });
   });
 });

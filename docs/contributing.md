@@ -1,6 +1,6 @@
 ---
 title: Contributing
-description: Set up maze-core, validate a change, and contribute through the protected workflow.
+description: Set up seeded-maze, validate a change, and contribute through the protected workflow.
 ---
 
 ## Local workflow
@@ -20,6 +20,6 @@ Branch from `main`, make a focused Conventional Commit, open a pull request, and
 current by merging `main` into it when necessary. Do not hand-edit versions or `CHANGELOG.md`:
 release-please owns them.
 
-Read the repository [contribution guide](https://github.com/jbcom/maze-core/blob/main/CONTRIBUTING.md)
-and [agent instructions](https://github.com/jbcom/maze-core/blob/main/AGENTS.md) before changing
+Read the repository [contribution guide](https://github.com/jbcom/seeded-maze/blob/main/CONTRIBUTING.md)
+and [agent instructions](https://github.com/jbcom/seeded-maze/blob/main/AGENTS.md) before changing
 public APIs.

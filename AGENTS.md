@@ -9,7 +9,7 @@ from reading the code alone.
   `mise.toml`) for a matching local Node/pnpm toolchain, or `corepack enable` if mise isn't available.
 - This is a pnpm workspace with two members: `.` (the published library) and `docs/` (the private
   Sourcey documentation site). Root-level `pnpm` scripts operate on the library; `pnpm docs:*` scripts
-  delegate to `docs/` via `pnpm --filter maze-core-docs`. Sourcey emits `docs/dist/`, including the
+  delegate to `docs/` via `pnpm --filter seeded-maze-docs`. Sourcey emits `docs/dist/`, including the
   site `llms.txt` and `llms-full.txt`; the root `llms.txt` is separate, concise repository orientation.
 - `pnpm verify` is the single gate CI runs on the library: Biome lint, markdownlint on the docs,
   strict TypeScript, the full test suite with coverage, the dual-format build, both runnable examples,

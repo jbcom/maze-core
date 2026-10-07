@@ -1,6 +1,6 @@
 ## Summary
 
-Describe the user-visible behavior and why this change belongs in maze-core.
+Describe the user-visible behavior and why this change belongs in seeded-maze.
 
 ## Validation
 

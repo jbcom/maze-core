@@ -1,21 +1,21 @@
 ---
 title: Getting started
-description: Install maze-core and generate, measure and render your first maze.
+description: Install seeded-maze and generate, measure and render your first maze.
 ---
 
 ## Install
 
 ```sh
-npm install maze-core
+npm install seeded-maze
 ```
 
-Use Node.js 24 or newer. maze-core ships native ESM and CommonJS entry points with format-correct
+Use Node.js 24 or newer. seeded-maze ships native ESM and CommonJS entry points with format-correct
 TypeScript declarations.
 
 ## A single maze
 
 ```ts
-import { buildGeometry, DEFAULT_CONFIG, generateMaze } from 'maze-core';
+import { buildGeometry, DEFAULT_CONFIG, generateMaze } from 'seeded-maze';
 
 const layout = generateMaze(9, 9, 'level-1');
 const geometry = buildGeometry(layout, DEFAULT_CONFIG);
@@ -31,7 +31,7 @@ to the next odd number so the maze has a single centre cell.
 ## Moving through it
 
 ```ts
-import { getNodeConnections } from 'maze-core';
+import { getNodeConnections } from 'seeded-maze';
 
 let node = geometry.railNodes.get(geometry.centerNodeId);
 if (node) {
@@ -46,7 +46,7 @@ can ask which cell it is standing in.
 ## Curved walls
 
 ```ts
-import { buildCurvedWalls, minDistanceToWalls } from 'maze-core';
+import { buildCurvedWalls, minDistanceToWalls } from 'seeded-maze';
 
 const walls = buildCurvedWalls(layout, DEFAULT_CONFIG, {
   smoothing: 2,
@@ -58,7 +58,7 @@ const clearance = minDistanceToWalls({ x: 0, z: 0 }, walls);
 ## Several layers
 
 ```ts
-import { assertSolvable, generateLayeredMaze } from 'maze-core';
+import { assertSolvable, generateLayeredMaze } from 'seeded-maze';
 
 const tower = generateLayeredMaze({ layers: 4, width: 11, height: 11, seed: 'tower-1' });
 const report = assertSolvable(tower);
@@ -66,4 +66,4 @@ if (!report.solvable) throw new Error(`unreachable layers: ${report.unreachableL
 ```
 
 Runnable ESM and CommonJS examples are in the
-[repository](https://github.com/jbcom/maze-core/tree/main/examples).
+[repository](https://github.com/jbcom/seeded-maze/tree/main/examples).

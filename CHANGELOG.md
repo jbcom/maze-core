@@ -2,7 +2,7 @@
 
 ## 0.2.0 (2026-10-07)
 
-First release on npmjs, under the name `maze-core`, as open source under the MIT licence.
+First release on npmjs, under the name `seeded-maze`, as open source under the MIT licence.
 
 ### Features
 

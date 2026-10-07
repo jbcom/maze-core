@@ -14,7 +14,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 const packageRoot = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const npm = process.platform === 'win32' ? 'npm.cmd' : 'npm';
 const npmNeedsShell = process.platform === 'win32';
-const NAME = 'maze-core';
+const NAME = 'seeded-maze';
 
 // pnpm forwards its own npm_config_* settings to child processes, and newer npm versions warn about
 // pnpm-only keys; this check also must not inherit a credential. SKIP_INSTALL_SIMPLE_GIT_HOOKS keeps
@@ -91,7 +91,7 @@ function exercise(api) {
   });
 }
 
-const scratch = mkdtempSync(path.join(tmpdir(), 'maze-core-package-'));
+const scratch = mkdtempSync(path.join(tmpdir(), 'seeded-maze-package-'));
 
 try {
   const packOutput = execFileSync(
@@ -130,7 +130,14 @@ try {
   ]) {
     assert(packedPaths.has(required), `packed artifact is missing ${required}`);
   }
-  for (const forbiddenPrefix of ['src/', 'tests/', 'coverage/', 'scripts/', '.github/']) {
+  for (const forbiddenPrefix of [
+    'src/',
+    'tests/',
+    'coverage/',
+    'scripts/',
+    '.github/',
+    'docs/dist/',
+  ]) {
     assert(
       [...packedPaths].every((file) => !file.startsWith(forbiddenPrefix)),
       `packed artifact unexpectedly contains ${forbiddenPrefix}`,
@@ -151,7 +158,7 @@ try {
   mkdirSync(consumer);
   writeFileSync(
     path.join(consumer, 'package.json'),
-    `${JSON.stringify({ name: 'maze-core-consumer', private: true, type: 'module' })}\n`,
+    `${JSON.stringify({ name: 'seeded-maze-consumer', private: true, type: 'module' })}\n`,
   );
   execFileSync(
     npm,

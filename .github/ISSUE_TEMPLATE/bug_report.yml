@@ -1,5 +1,5 @@
 name: Bug report
-description: Report reproducible incorrect behavior in maze-core.
+description: Report reproducible incorrect behavior in seeded-maze.
 title: "fix: "
 labels: [bug]
 body:
@@ -25,8 +25,8 @@ body:
     id: versions
     attributes:
       label: Versions
-      description: maze-core, Node.js, package manager, and operating system.
-      placeholder: maze-core 0.2.0; Node 24; pnpm 12; macOS 26
+      description: seeded-maze, Node.js, package manager, and operating system.
+      placeholder: seeded-maze 0.2.0; Node 24; pnpm 12; macOS 26
     validations:
       required: true
   - type: textarea

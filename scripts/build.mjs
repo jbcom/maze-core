@@ -87,4 +87,4 @@ writeFileSync(
   `${JSON.stringify({ type: 'commonjs' }, null, 2)}\n`,
 );
 
-console.info('maze-core: built dist/esm (ESM + types) and dist/cjs (CommonJS + types)');
+console.info('seeded-maze: built dist/esm (ESM + types) and dist/cjs (CommonJS + types)');

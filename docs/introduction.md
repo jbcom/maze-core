@@ -1,15 +1,15 @@
 ---
-title: maze-core
+title: seeded-maze
 description: Deterministic maze generation with geometry, curved walls and provable multi-layer solvability.
 ---
 
-maze-core generates mazes from a seed and describes them as plain data: a grid layout, render-ready
+seeded-maze generates mazes from a seed and describes them as plain data: a grid layout, render-ready
 wall boxes, a navigation graph, smoothed wall outlines, and stacks of layers joined by stairs, drops
 and jumps. It does not draw anything and has no opinion about your engine.
 
 ## Why use it?
 
-| Problem | maze-core |
+| Problem | seeded-maze |
 | --- | --- |
 | A shared seed gives a different maze on another machine | The layout is a pure function of `(width, height, seed)` |
 | Walls look like axis-aligned boxes | `buildCurvedWalls` smooths and wobbles them without changing which cells connect |

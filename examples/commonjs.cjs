@@ -1,4 +1,4 @@
-const { assertSolvable, generateLayeredMaze, generateMaze } = require('maze-core');
+const { assertSolvable, generateLayeredMaze, generateMaze } = require('seeded-maze');
 
 const layout = generateMaze(9, 9, 'commonjs');
 const layered = generateLayeredMaze({ layers: 2, width: 9, height: 9, seed: 'commonjs' });

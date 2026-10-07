@@ -16,12 +16,20 @@ check, which compares ESM and CommonJS output for the same seed.
 to `.cjs` / `.d.cts` and `dist/cjs/package.json` marks the directory `commonjs`, so the same files
 resolve correctly under `"type": "module"`. `arethetypeswrong` and `publint` run in `pnpm verify`.
 
-## 2026-10-07: MIT licence, published to npmjs as `maze-core`
+## 2026-10-07: MIT licence, planned npmjs release as `seeded-maze`
 
-The package is open source. The licence is MIT, the npm name is the unscoped `maze-core`, and the
-first release on npmjs is 0.2.0. Earlier 0.1.x releases came from a private registry and are not on
+The package is open source. The licence is MIT, the npm name is the unscoped `seeded-maze`, and the
+planned first release on npmjs is 0.2.0; it has not been published. Earlier 0.1.x releases came from a private registry and are not on
 npmjs. Releases after 0.2.0 are cut by release-please and published from CI by OIDC trusted
 publishing with provenance.
+
+## 2026-10-07: Rename the package to `seeded-maze`
+
+**Decision.** Use `seeded-maze` as the unscoped npm name and repository name, keeping version 0.2.0.
+
+**Why.** npm refused the original name as too similar to `axe-core`. The new name describes
+seed-driven, deterministic maze generation, including 3D geometry, curved walls and multi-layer
+solvability. No version has been published, so the rename does not change an existing npm contract.
 
 ## The seed is part of the API
 

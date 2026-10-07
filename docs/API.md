@@ -1,6 +1,6 @@
 # API reference
 
-Everything is exported from `maze-core`, as ESM or CommonJS. All functions are pure and synchronous.
+Everything is exported from `seeded-maze`, as ESM or CommonJS. All functions are pure and synchronous.
 Coordinates come in two spaces: **grid** coordinates (`x` to the east, `y` to the south, both counted
 in cells from the top-left) and **world** coordinates (`x` and `z` in whatever unit `MazeConfig.cellSize`
 is expressed in, centred on the maze's centre cell).

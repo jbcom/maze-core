@@ -1,6 +1,6 @@
 # Architecture
 
-maze-core is a small set of pure functions over plain data. It owns no rendering, no input and no
+seeded-maze is a small set of pure functions over plain data. It owns no rendering, no input and no
 game state: a caller hands it dimensions and a seed and gets arrays and maps back.
 
 ## Module boundaries

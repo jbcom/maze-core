@@ -1,10 +1,10 @@
 {
   "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json",
-  "bootstrap-sha": "a1435abd3c5c8f74bcf55a146be67e967af55f9c",
+  "bootstrap-sha": "ee77914c0bbef51a9f99783d879c154f974b8285",
   "packages": {
     ".": {
       "release-type": "node",
-      "package-name": "maze-core",
+      "package-name": "seeded-maze",
       "changelog-path": "CHANGELOG.md",
       "include-component-in-tag": false,
       "bump-minor-pre-major": true
